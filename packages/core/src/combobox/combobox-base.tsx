@@ -105,6 +105,9 @@ export interface ComboboxBaseOptions<Option, OptGroup = never>
 	 */
 	onOpenChange?: (isOpen: boolean, triggerMode?: ComboboxTriggerMode) => void;
 
+	/** The controlled text value of the input in the combobox. */
+	inputValue?: string;
+
 	/** Handler that is called when the combobox input value changes. */
 	onInputChange?: (value: string) => void;
 
@@ -307,6 +310,7 @@ export function ComboboxBase<
 			"open",
 			"defaultOpen",
 			"onOpenChange",
+			'inputValue',
 			"onInputChange",
 			"value",
 			"defaultValue",
@@ -380,6 +384,7 @@ export function ComboboxBase<
 
 	const [inputValue, setInputValue] = createControllableSignal<string>({
 		defaultValue: () => "",
+		value: () => local.inputValue,
 		onChange: (value) => {
 			local.onInputChange?.(value);
 
@@ -708,6 +713,8 @@ export function ComboboxBase<
 	});
 
 	const resetInputValue = (selectedKeys: Set<string>) => {
+		if (local.inputValue !== undefined) return;
+
 		if (local.selectionMode === "single") {
 			const selectedKey = [...selectedKeys][0];
 
