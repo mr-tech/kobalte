@@ -8,8 +8,9 @@ import {
   ComboboxListbox,
   ComboboxPortal,
   ComboboxRoot,
-  ComboboxTrigger
-} from "../chunk/GADLA7SU.jsx";
+  ComboboxTrigger,
+  useComboboxContext
+} from "../chunk/GI73N5II.jsx";
 import "../chunk/SRFLFESK.jsx";
 import {
   ListboxItem,
@@ -33,6 +34,8 @@ import "../chunk/5OEKFZ5A.jsx";
 import "../chunk/IGYOA2ZZ.jsx";
 import "../chunk/BMMCQ7YJ.jsx";
 import "../chunk/3NI6FTA2.jsx";
+import "../chunk/E53DB7BS.jsx";
+import "../chunk/UKTBL2JL.jsx";
 import "../chunk/37WKIN7J.jsx";
 import {
   FormControlDescription,
@@ -40,8 +43,6 @@ import {
   FormControlLabel
 } from "../chunk/QICKIQIY.jsx";
 import "../chunk/QJIB6BDF.jsx";
-import "../chunk/E53DB7BS.jsx";
-import "../chunk/UKTBL2JL.jsx";
 import "../chunk/JNCCF6MP.jsx";
 import "../chunk/EJ5I5XML.jsx";
 import "../chunk/FN6EICGO.jsx";
@@ -67,5 +68,6 @@ export {
   ComboboxPortal as Portal,
   ComboboxRoot as Root,
   ListboxSection as Section,
-  ComboboxTrigger as Trigger
+  ComboboxTrigger as Trigger,
+  useComboboxContext
 };

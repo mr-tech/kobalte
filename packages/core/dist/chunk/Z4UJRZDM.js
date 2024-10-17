@@ -8,7 +8,7 @@ import { createFilter } from './XHJPQEZP.js';
 import { createFocusScope } from './ISKHZMHS.js';
 import { createHideOutside } from './TZGE2AQH.js';
 import { announce } from './YA7DCYMB.js';
-import { DismissableLayer } from './G7G3PFRJ.js';
+import { DismissableLayer } from './7KU4OSOB.js';
 import { FORM_CONTROL_FIELD_PROP_NAMES, createFormControlField } from './HLYNC3TZ.js';
 import { FormControlDescription, FormControlErrorMessage, FormControlLabel, useFormControlContext, FORM_CONTROL_PROP_NAMES, createFormControl, FormControlContext } from './Q2DJLZQE.js';
 import { createFormResetListener } from './ANN3A2QM.js';
@@ -20,7 +20,7 @@ import { Polymorphic } from './6Y7B2NEO.js';
 import { __export } from './5ZKAE4VZ.js';
 import { createComponent, mergeProps, memo, Portal } from 'solid-js/web';
 import { focusWithoutScrolling, mergeRefs, mergeDefaultProps, isFunction, callHandler, contains, access, isAppleDevice, createGenerateId } from '@kobalte/utils';
-import { createContext, splitProps, Show, createEffect, onCleanup, children, createMemo, useContext, createUniqueId, createSignal, on } from 'solid-js';
+import { createContext, useContext, splitProps, Show, createEffect, onCleanup, children, createMemo, createUniqueId, createSignal, on } from 'solid-js';
 import { combineStyle } from '@solid-primitives/props';
 import createPreventScroll from 'solid-prevent-scroll';
 import createPresence from 'solid-presence';
@@ -46,7 +46,8 @@ __export(combobox_exports, {
   Portal: () => ComboboxPortal,
   Root: () => ComboboxRoot,
   Section: () => ListboxSection,
-  Trigger: () => ComboboxTrigger
+  Trigger: () => ComboboxTrigger,
+  useComboboxContext: () => useComboboxContext
 });
 var ComboboxContext = createContext();
 function useComboboxContext() {
@@ -993,4 +994,4 @@ var Combobox = Object.assign(ComboboxRoot, {
   Trigger: ComboboxTrigger
 });
 
-export { Combobox, ComboboxContent, ComboboxControl, ComboboxHiddenSelect, ComboboxIcon, ComboboxInput, ComboboxListbox, ComboboxPortal, ComboboxRoot, ComboboxTrigger, combobox_exports };
+export { Combobox, ComboboxContent, ComboboxControl, ComboboxHiddenSelect, ComboboxIcon, ComboboxInput, ComboboxListbox, ComboboxPortal, ComboboxRoot, ComboboxTrigger, combobox_exports, useComboboxContext };

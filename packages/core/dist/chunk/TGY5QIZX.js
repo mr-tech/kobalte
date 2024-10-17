@@ -1,86 +1,44 @@
-import {
-  MenuRoot,
-  MenuTrigger,
-  MenubarContext,
-  useMenubarContext,
-  useOptionalMenuContext
-} from "./IYMNQCIG.jsx";
-import {
-  createInteractOutside
-} from "./BMMCQ7YJ.jsx";
-import {
-  createControllableSignal
-} from "./FN6EICGO.jsx";
-import {
-  Polymorphic
-} from "./FLVHQV4A.jsx";
+import { useMenubarContext, MenuRoot, MenubarContext, useOptionalMenuContext, MenuTrigger } from './CHVSKBAO.js';
+import { createInteractOutside } from './QGCMYLTA.js';
+import { createControllableSignal } from './BLN63FDC.js';
+import { Polymorphic } from './6Y7B2NEO.js';
+import { createComponent, mergeProps, isServer } from 'solid-js/web';
+import { mergeDefaultProps, createGenerateId, contains, mergeRefs } from '@kobalte/utils';
+import { splitProps, createUniqueId, createSignal, createMemo, createEffect, onCleanup } from 'solid-js';
 
-// src/menubar/menubar-menu.tsx
-import { mergeDefaultProps } from "@kobalte/utils";
-import { createUniqueId, splitProps } from "solid-js";
 function MenubarMenu(props) {
   const menubarContext = useMenubarContext();
-  const mergedProps = mergeDefaultProps(
-    {
-      modal: false
-    },
-    props
-  );
+  const mergedProps = mergeDefaultProps({
+    modal: false
+  }, props);
   const [local, others] = splitProps(mergedProps, ["value"]);
   const uniqueid = createUniqueId();
   const defaultId = menubarContext.generateId(`menubar-menu-${uniqueid}`);
-  const mergedPropsWithId = mergeDefaultProps({ id: defaultId }, others);
-  return <MenuRoot value={local.value ?? uniqueid} {...mergedPropsWithId} />;
+  const mergedPropsWithId = mergeDefaultProps({
+    id: defaultId
+  }, others);
+  return createComponent(MenuRoot, mergeProps({
+    get value() {
+      return local.value ?? uniqueid;
+    }
+  }, mergedPropsWithId));
 }
-
-// src/menubar/menubar-root.tsx
-import {
-  contains,
-  createGenerateId,
-  mergeDefaultProps as mergeDefaultProps2,
-  mergeRefs
-} from "@kobalte/utils";
-import {
-  createEffect,
-  createMemo,
-  createSignal,
-  createUniqueId as createUniqueId2,
-  onCleanup,
-  splitProps as splitProps2
-} from "solid-js";
-import { isServer } from "solid-js/web";
 function MenubarRoot(props) {
   let ref;
-  const defaultId = `menubar-${createUniqueId2()}`;
-  const mergedProps = mergeDefaultProps2(
-    { id: defaultId, loop: true, orientation: "horizontal" },
-    props
-  );
-  const [local, others] = splitProps2(
-    mergedProps,
-    [
-      "ref",
-      "value",
-      "defaultValue",
-      "onValueChange",
-      "loop",
-      "focusOnAlt",
-      "autoFocusMenu",
-      "onAutoFocusMenuChange",
-      "orientation"
-    ]
-  );
-  const [value, setValue] = createControllableSignal(
-    {
-      value: () => local.value,
-      defaultValue: () => local.defaultValue,
-      onChange: (value2) => local.onValueChange?.(value2)
-    }
-  );
+  const defaultId = `menubar-${createUniqueId()}`;
+  const mergedProps = mergeDefaultProps({
+    id: defaultId,
+    loop: true,
+    orientation: "horizontal"
+  }, props);
+  const [local, others] = splitProps(mergedProps, ["ref", "value", "defaultValue", "onValueChange", "loop", "focusOnAlt", "autoFocusMenu", "onAutoFocusMenuChange", "orientation"]);
+  const [value, setValue] = createControllableSignal({
+    value: () => local.value,
+    defaultValue: () => local.defaultValue,
+    onChange: (value2) => local.onValueChange?.(value2)
+  });
   const [lastValue, setLastValue] = createSignal();
-  const [menuRefs, setMenuRefs] = createSignal(
-    /* @__PURE__ */ new Map()
-  );
+  const [menuRefs, setMenuRefs] = createSignal(/* @__PURE__ */ new Map());
   const [autoFocusMenu, setAutoFocusMenu] = createControllableSignal({
     value: () => local.autoFocusMenu,
     defaultValue: () => false,
@@ -159,18 +117,15 @@ function MenubarRoot(props) {
     if (value() == null)
       setAutoFocusMenu(false);
   });
-  createInteractOutside(
-    {
-      onInteractOutside: () => {
-        context.closeMenu();
-        setTimeout(() => context.closeMenu());
-      },
-      shouldExcludeElement: (element) => {
-        return [ref, ...menuRefs().values()].flat().some((ref2) => contains(ref2, element));
-      }
+  createInteractOutside({
+    onInteractOutside: () => {
+      context.closeMenu();
+      setTimeout(() => context.closeMenu());
     },
-    () => ref
-  );
+    shouldExcludeElement: (element) => {
+      return [ref, ...menuRefs().values()].flat().some((ref2) => contains(ref2, element));
+    }
+  }, () => ref);
   const keydownHandler = (e) => {
     if (e.key === "Alt") {
       e.preventDefault();
@@ -196,30 +151,39 @@ function MenubarRoot(props) {
     if (value() != null)
       setLastValue(value());
   });
-  return <MenubarContext.Provider value={context}><Polymorphic
-    as="div"
-    ref={mergeRefs((el) => ref = el, local.ref)}
-    role="menubar"
-    data-orientation={local.orientation}
-    aria-orientation={local.orientation}
-    {...others}
-  /></MenubarContext.Provider>;
+  return createComponent(MenubarContext.Provider, {
+    value: context,
+    get children() {
+      return createComponent(Polymorphic, mergeProps({
+        as: "div",
+        ref(r$) {
+          const _ref$ = mergeRefs((el) => ref = el, local.ref);
+          typeof _ref$ === "function" && _ref$(r$);
+        },
+        role: "menubar",
+        get ["data-orientation"]() {
+          return local.orientation;
+        },
+        get ["aria-orientation"]() {
+          return local.orientation;
+        }
+      }, others));
+    }
+  });
 }
-
-// src/menubar/menubar-trigger.tsx
-import { createUniqueId as createUniqueId3 } from "solid-js";
 function MenubarTrigger(props) {
   const menubarContext = useMenubarContext();
   const menuContext = useOptionalMenuContext();
   if (menuContext === void 0 && Object.hasOwn(props, "href")) {
-    const id = menubarContext.generateId("link-trigger-") + createUniqueId3();
-    return <MenubarMenu value={id}><MenuTrigger {...props} /></MenubarMenu>;
+    const id = menubarContext.generateId("link-trigger-") + createUniqueId();
+    return createComponent(MenubarMenu, {
+      value: id,
+      get children() {
+        return createComponent(MenuTrigger, props);
+      }
+    });
   }
   return MenuTrigger(props);
 }
 
-export {
-  MenubarMenu,
-  MenubarRoot,
-  MenubarTrigger
-};
+export { MenubarMenu, MenubarRoot, MenubarTrigger };

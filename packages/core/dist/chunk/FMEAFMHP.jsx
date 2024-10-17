@@ -1,10 +1,33 @@
-import { MenuCheckboxItem, MenuGroup, MenuGroupLabel, MenuIcon, MenuItem, MenuItemDescription, MenuItemIndicator, MenuItemLabel, MenuPortal, MenuRadioGroup, MenuRadioItem, MenuSub, MenuSubContent, MenuSubTrigger, MenuTrigger, useMenuRootContext, useMenuContext, MenuContent, MenuRoot } from './IHG3HEOY.js';
-import { SeparatorRoot } from './STGRFJHZ.js';
-import { PopperArrow } from './4X2EKUJ3.js';
-import { __export } from './5ZKAE4VZ.js';
-import { createComponent, mergeProps } from 'solid-js/web';
-import { mergeDefaultProps, focusWithoutScrolling } from '@kobalte/utils';
-import { splitProps, createUniqueId } from 'solid-js';
+import {
+  MenuCheckboxItem,
+  MenuContent,
+  MenuGroup,
+  MenuGroupLabel,
+  MenuIcon,
+  MenuItem,
+  MenuItemDescription,
+  MenuItemIndicator,
+  MenuItemLabel,
+  MenuPortal,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuRoot,
+  MenuSub,
+  MenuSubContent,
+  MenuSubTrigger,
+  MenuTrigger,
+  useMenuContext,
+  useMenuRootContext
+} from "./JOVDR6PE.jsx";
+import {
+  SeparatorRoot
+} from "./T4C3DMHT.jsx";
+import {
+  PopperArrow
+} from "./KFH362HI.jsx";
+import {
+  __export
+} from "./5WXHJDCZ.jsx";
 
 // src/dropdown-menu/index.tsx
 var dropdown_menu_exports = {};
@@ -30,10 +53,17 @@ __export(dropdown_menu_exports, {
   SubTrigger: () => MenuSubTrigger,
   Trigger: () => MenuTrigger
 });
+
+// src/dropdown-menu/dropdown-menu-content.tsx
+import { focusWithoutScrolling } from "@kobalte/utils";
+import { splitProps } from "solid-js";
 function DropdownMenuContent(props) {
   const rootContext = useMenuRootContext();
   const context = useMenuContext();
-  const [local, others] = splitProps(props, ["onCloseAutoFocus", "onInteractOutside"]);
+  const [local, others] = splitProps(props, [
+    "onCloseAutoFocus",
+    "onInteractOutside"
+  ]);
   let hasInteractedOutside = false;
   const onCloseAutoFocus = (e) => {
     local.onCloseAutoFocus?.(e);
@@ -49,17 +79,20 @@ function DropdownMenuContent(props) {
       hasInteractedOutside = true;
     }
   };
-  return createComponent(MenuContent, mergeProps({
-    onCloseAutoFocus,
-    onInteractOutside
-  }, others));
+  return <MenuContent
+    onCloseAutoFocus={onCloseAutoFocus}
+    onInteractOutside={onInteractOutside}
+    {...others}
+  />;
 }
+
+// src/dropdown-menu/dropdown-menu-root.tsx
+import { mergeDefaultProps } from "@kobalte/utils";
+import { createUniqueId } from "solid-js";
 function DropdownMenuRoot(props) {
   const defaultId = `dropdownmenu-${createUniqueId()}`;
-  const mergedProps = mergeDefaultProps({
-    id: defaultId
-  }, props);
-  return createComponent(MenuRoot, mergedProps);
+  const mergedProps = mergeDefaultProps({ id: defaultId }, props);
+  return <MenuRoot {...mergedProps} />;
 }
 
 // src/dropdown-menu/index.tsx
@@ -84,4 +117,9 @@ var DropdownMenu = Object.assign(DropdownMenuRoot, {
   Trigger: MenuTrigger
 });
 
-export { DropdownMenu, DropdownMenuContent, DropdownMenuRoot, dropdown_menu_exports };
+export {
+  DropdownMenuContent,
+  DropdownMenuRoot,
+  DropdownMenu,
+  dropdown_menu_exports
+};

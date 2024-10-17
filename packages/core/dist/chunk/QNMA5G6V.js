@@ -1,4 +1,4 @@
-import { DialogCloseButton, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, DialogContent } from './XZPN5BPK.js';
+import { DialogCloseButton, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, DialogContent } from './SNUMAAAS.js';
 import { __export } from './5ZKAE4VZ.js';
 import { createComponent, mergeProps } from 'solid-js/web';
 

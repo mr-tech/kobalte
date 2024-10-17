@@ -34,7 +34,7 @@ export { i as Breadcrumbs } from './index-564d50e5.js';
 export { i as Button } from './index-79050fd4.js';
 export { i as Checkbox } from './index-14d63cab.js';
 export { i as Collapsible } from './index-d94b8354.js';
-export { i as Combobox } from './index-ae4de620.js';
+export { i as Combobox } from './index-b2bb9008.js';
 export { i as ContextMenu } from './index-d60490d2.js';
 export { i as Dialog } from './index-1eb52bda.js';
 export { i as DropdownMenu } from './index-dfe28acc.js';

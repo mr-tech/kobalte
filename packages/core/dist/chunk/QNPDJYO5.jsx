@@ -3,7 +3,7 @@ import {
 } from "./XTJD7L6B.jsx";
 import {
   ToggleButtonRoot
-} from "./BMUFHY3D.jsx";
+} from "./WAUM5GOD.jsx";
 import {
   createDomCollection,
   createDomCollectionItem

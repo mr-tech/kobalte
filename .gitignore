@@ -1,7 +1,10 @@
 node_modules
 build
-dist
 gitignore
+packages/utils/dist
+packages/tests/dist
+packages/tailwindcss/dist
+packages/vanilla-extract/dist
 
 # debug
 logs

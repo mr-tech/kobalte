@@ -1,30 +1,28 @@
 import {
-	type ComboboxContentCommonProps,
+	ComboboxContent as Content, type ComboboxContentCommonProps,
 	type ComboboxContentOptions,
 	type ComboboxContentProps,
-	type ComboboxContentRenderProps,
-	ComboboxContent as Content,
+	type ComboboxContentRenderProps
 } from "../combobox/combobox-content";
 import {
-	type ComboboxInputCommonProps,
+	ComboboxInput as Input, type ComboboxInputCommonProps,
 	type ComboboxInputOptions,
 	type ComboboxInputProps,
-	type ComboboxInputRenderProps,
-	ComboboxInput as Input,
+	type ComboboxInputRenderProps
 } from "../combobox/combobox-input";
 import {
-	type ComboboxListboxCommonProps,
+	ComboboxListbox as Listbox, type ComboboxListboxCommonProps,
 	type ComboboxListboxOptions,
 	type ComboboxListboxProps,
-	type ComboboxListboxRenderProps,
-	ComboboxListbox as Listbox,
+	type ComboboxListboxRenderProps
 } from "../combobox/combobox-listbox";
 import {
-	type ComboboxPortalProps,
-	ComboboxPortal as Portal,
+	ComboboxPortal as Portal, type ComboboxPortalProps
 } from "../combobox/combobox-portal";
 import {
-	type FormControlDescriptionCommonProps as ComboboxDescriptionCommonProps,
+	FormControlDescription as Description,
+	FormControlErrorMessage as ErrorMessage,
+	FormControlLabel as Label, type FormControlDescriptionCommonProps as ComboboxDescriptionCommonProps,
 	type FormControlDescriptionOptions as ComboboxDescriptionOptions,
 	type FormControlDescriptionProps as ComboboxDescriptionProps,
 	type FormControlDescriptionRenderProps as ComboboxDescriptionRenderProps,
@@ -35,13 +33,14 @@ import {
 	type FormControlLabelCommonProps as ComboboxLabelCommonProps,
 	type FormControlLabelOptions as ComboboxLabelOptions,
 	type FormControlLabelProps as ComboboxLabelProps,
-	type FormControlLabelRenderProps as ComboboxLabelRenderProps,
-	FormControlDescription as Description,
-	FormControlErrorMessage as ErrorMessage,
-	FormControlLabel as Label,
+	type FormControlLabelRenderProps as ComboboxLabelRenderProps
 } from "../form-control";
 import {
-	type ListboxItemCommonProps as ComboboxItemCommonProps,
+	Item,
+	ItemDescription,
+	ItemIndicator,
+	ItemLabel,
+	Section, type ListboxItemCommonProps as ComboboxItemCommonProps,
 	type ListboxItemDescriptionCommonProps as ComboboxItemDescriptionCommonProps,
 	type ListboxItemDescriptionOptions as ComboboxItemDescriptionOptions,
 	type ListboxItemDescriptionProps as ComboboxItemDescriptionProps,
@@ -60,49 +59,41 @@ import {
 	type ListboxSectionCommonProps as ComboboxSectionCommonProps,
 	type ListboxSectionOptions as ComboboxSectionOptions,
 	type ListboxSectionProps as ComboboxSectionProps,
-	type ListboxSectionRenderProps as ComboboxSectionRenderProps,
-	Item,
-	ItemDescription,
-	ItemIndicator,
-	ItemLabel,
-	Section,
+	type ListboxSectionRenderProps as ComboboxSectionRenderProps
 } from "../listbox";
 import {
 	Arrow,
 	type PopperArrowOptions as ComboboxArrowOptions,
-	type PopperArrowProps as ComboboxArrowProps,
+	type PopperArrowProps as ComboboxArrowProps
 } from "../popper";
 import type {
 	ComboboxBaseItemComponentProps as ComboboxRootItemComponentProps,
-	ComboboxBaseSectionComponentProps as ComboboxRootSectionComponentProps,
+	ComboboxBaseSectionComponentProps as ComboboxRootSectionComponentProps
 } from "./combobox-base";
+import { useComboboxContext } from "./combobox-context";
 import {
-	type ComboboxControlCommonProps,
+	ComboboxControl as Control, type ComboboxControlCommonProps,
 	type ComboboxControlOptions,
 	type ComboboxControlProps,
-	type ComboboxControlRenderProps,
-	ComboboxControl as Control,
+	type ComboboxControlRenderProps
 } from "./combobox-control";
 import {
-	type ComboboxHiddenSelectProps,
-	ComboboxHiddenSelect as HiddenSelect,
+	ComboboxHiddenSelect as HiddenSelect, type ComboboxHiddenSelectProps
 } from "./combobox-hidden-select";
-import { type ComboboxIconProps, ComboboxIcon as Icon } from "./combobox-icon";
+import { ComboboxIcon as Icon, type ComboboxIconProps } from "./combobox-icon";
 import {
-	type ComboboxMultipleSelectionOptions,
+	ComboboxRoot as Root, type ComboboxMultipleSelectionOptions,
 	type ComboboxRootCommonProps,
 	type ComboboxRootOptions,
 	type ComboboxRootProps,
 	type ComboboxRootRenderProps,
-	type ComboboxSingleSelectionOptions,
-	ComboboxRoot as Root,
+	type ComboboxSingleSelectionOptions
 } from "./combobox-root";
 import {
-	type ComboboxTriggerCommonProps,
+	ComboboxTrigger as Trigger, type ComboboxTriggerCommonProps,
 	type ComboboxTriggerOptions,
 	type ComboboxTriggerProps,
-	type ComboboxTriggerRenderProps,
-	ComboboxTrigger as Trigger,
+	type ComboboxTriggerRenderProps
 } from "./combobox-trigger";
 import type { ComboboxTriggerMode } from "./types";
 
@@ -174,7 +165,6 @@ export type {
 	ComboboxTriggerRenderProps,
 	ComboboxTriggerProps,
 };
-
 export {
 	Arrow,
 	Content,
@@ -194,7 +184,9 @@ export {
 	Root,
 	Section,
 	Trigger,
+	useComboboxContext,
 };
+
 
 export const Combobox = Object.assign(Root, {
 	Arrow,

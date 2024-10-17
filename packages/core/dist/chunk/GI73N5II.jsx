@@ -40,6 +40,12 @@ import {
   DismissableLayer
 } from "./5OEKFZ5A.jsx";
 import {
+  createDisclosureState
+} from "./E53DB7BS.jsx";
+import {
+  ButtonRoot
+} from "./UKTBL2JL.jsx";
+import {
   FORM_CONTROL_FIELD_PROP_NAMES,
   createFormControlField
 } from "./37WKIN7J.jsx";
@@ -55,12 +61,6 @@ import {
 import {
   createFormResetListener
 } from "./QJIB6BDF.jsx";
-import {
-  createDisclosureState
-} from "./E53DB7BS.jsx";
-import {
-  ButtonRoot
-} from "./UKTBL2JL.jsx";
 import {
   createRegisterId
 } from "./JNCCF6MP.jsx";
@@ -95,7 +95,8 @@ __export(combobox_exports, {
   Portal: () => ComboboxPortal,
   Root: () => ComboboxRoot,
   Section: () => ListboxSection,
-  Trigger: () => ComboboxTrigger
+  Trigger: () => ComboboxTrigger,
+  useComboboxContext: () => useComboboxContext
 });
 
 // src/combobox/combobox-content.tsx
@@ -1151,6 +1152,7 @@ var Combobox = Object.assign(ComboboxRoot, {
 });
 
 export {
+  useComboboxContext,
   ComboboxContent,
   ComboboxInput,
   ComboboxListbox,

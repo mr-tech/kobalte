@@ -1,16 +1,16 @@
 import * as solid_js from 'solid-js';
-import { JSX, ValidComponent, ComponentProps, Component, Accessor } from 'solid-js';
+import { Accessor, JSX, ValidComponent, ComponentProps, Component } from 'solid-js';
 import { a as DismissableLayerCommonProps, D as DismissableLayerRenderProps } from './dismissable-layer-0aef6de3.js';
 import { ElementOf, PolymorphicProps } from './polymorphic/index.js';
 import { PointerDownOutsideEvent, FocusOutsideEvent, InteractOutsideEvent } from './primitives/create-interact-outside/index.js';
+import { D as ListState, w as ListboxRootOptions, y as ListboxRootRenderProps, a as ListboxItem, b as ListboxItemDescription, c as ListboxItemIndicator, d as ListboxItemLabel, e as ListboxSection, f as ListboxItemCommonProps, g as ListboxItemDescriptionCommonProps, h as ListboxItemDescriptionOptions, i as ListboxItemDescriptionProps, j as ListboxItemDescriptionRenderProps, k as ListboxItemIndicatorCommonProps, l as ListboxItemIndicatorOptions, m as ListboxItemIndicatorProps, n as ListboxItemIndicatorRenderProps, o as ListboxItemLabelCommonProps, p as ListboxItemLabelOptions, q as ListboxItemLabelProps, r as ListboxItemLabelRenderProps, s as ListboxItemOptions, t as ListboxItemProps, u as ListboxItemRenderProps, z as ListboxSectionCommonProps, A as ListboxSectionOptions, B as ListboxSectionProps, C as ListboxSectionRenderProps } from './listbox-section-630514ef.js';
+import { a as CollectionNode } from './types-9fcfe271.js';
+import { F as FocusStrategy, K as KeyboardDelegate, S as SelectionMode, b as SelectionBehavior } from './types-3ae26449.js';
 import { F as FormControlDataSet, a as FormControlDescription, b as FormControlErrorMessage, c as FormControlDescriptionCommonProps, d as FormControlDescriptionOptions, e as FormControlDescriptionProps, f as FormControlDescriptionRenderProps, g as FormControlErrorMessageCommonProps, h as FormControlErrorMessageOptions, i as FormControlErrorMessageProps, j as FormControlErrorMessageRenderProps } from './form-control-error-message-7d91602e.js';
-import { w as ListboxRootOptions, y as ListboxRootRenderProps, a as ListboxItem, b as ListboxItemDescription, c as ListboxItemIndicator, d as ListboxItemLabel, e as ListboxSection, f as ListboxItemCommonProps, g as ListboxItemDescriptionCommonProps, h as ListboxItemDescriptionOptions, i as ListboxItemDescriptionProps, j as ListboxItemDescriptionRenderProps, k as ListboxItemIndicatorCommonProps, l as ListboxItemIndicatorOptions, m as ListboxItemIndicatorProps, n as ListboxItemIndicatorRenderProps, o as ListboxItemLabelCommonProps, p as ListboxItemLabelOptions, q as ListboxItemLabelProps, r as ListboxItemLabelRenderProps, s as ListboxItemOptions, t as ListboxItemProps, u as ListboxItemRenderProps, z as ListboxSectionCommonProps, A as ListboxSectionOptions, B as ListboxSectionProps, C as ListboxSectionRenderProps } from './listbox-section-630514ef.js';
 import { Portal } from 'solid-js/web';
 import { F as FormControlLabel, a as FormControlLabelCommonProps, b as FormControlLabelOptions, c as FormControlLabelProps, d as FormControlLabelRenderProps } from './form-control-label-fea2aaa3.js';
 import { g as PopperRootOptions, P as PopperArrow, b as PopperArrowOptions, c as PopperArrowProps } from './popper-root-4f4dc506.js';
 import { ValidationState } from '@kobalte/utils';
-import { a as CollectionNode } from './types-9fcfe271.js';
-import { K as KeyboardDelegate, S as SelectionMode, b as SelectionBehavior } from './types-3ae26449.js';
 import { a as ButtonRootCommonProps, d as ButtonRootRenderProps } from './button-root-da654b3e.js';
 
 type ComboboxTriggerMode = "focus" | "input" | "manual";
@@ -19,6 +19,53 @@ interface ComboboxDataSet {
     "data-expanded": string | undefined;
     "data-closed": string | undefined;
 }
+interface ComboboxContextValue {
+    dataset: Accessor<ComboboxDataSet>;
+    isOpen: Accessor<boolean>;
+    isDisabled: Accessor<boolean>;
+    isMultiple: Accessor<boolean>;
+    isVirtualized: Accessor<boolean>;
+    isModal: Accessor<boolean>;
+    preventScroll: Accessor<boolean>;
+    isInputFocused: Accessor<boolean>;
+    allowsEmptyCollection: Accessor<boolean>;
+    shouldFocusWrap: Accessor<boolean>;
+    removeOnBackspace: Accessor<boolean>;
+    selectedOptions: Accessor<any[]>;
+    contentPresent: Accessor<boolean>;
+    autoFocus: Accessor<FocusStrategy | boolean>;
+    activeDescendant: Accessor<string | undefined>;
+    inputValue: Accessor<string | undefined>;
+    triggerMode: Accessor<ComboboxTriggerMode>;
+    controlRef: Accessor<HTMLElement | undefined>;
+    inputRef: Accessor<HTMLInputElement | undefined>;
+    triggerRef: Accessor<HTMLElement | undefined>;
+    contentRef: Accessor<HTMLElement | undefined>;
+    listboxId: Accessor<string | undefined>;
+    triggerAriaLabel: Accessor<string | undefined>;
+    listboxAriaLabel: Accessor<string | undefined>;
+    listState: Accessor<ListState>;
+    keyboardDelegate: Accessor<KeyboardDelegate>;
+    resetInputValue: (selectedKeys: Set<string>) => void;
+    setIsInputFocused: (isFocused: boolean) => void;
+    setInputValue: (value: string) => void;
+    setControlRef: (el: HTMLElement) => void;
+    setInputRef: (el: HTMLInputElement) => void;
+    setTriggerRef: (el: HTMLElement) => void;
+    setContentRef: (el: HTMLElement) => void;
+    setListboxRef: (el: HTMLElement) => void;
+    open: (focusStrategy: FocusStrategy | boolean, triggerMode?: ComboboxTriggerMode) => void;
+    close: () => void;
+    toggle: (focusStrategy: FocusStrategy | boolean, triggerMode?: ComboboxTriggerMode) => void;
+    placeholder: Accessor<JSX.Element>;
+    renderItem: (item: CollectionNode) => JSX.Element;
+    renderSection: (section: CollectionNode) => JSX.Element;
+    removeOptionFromSelection: (option: any) => void;
+    onInputKeyDown: JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>;
+    generateId: (part: string) => string;
+    registerListboxId: (id: string) => () => void;
+}
+declare function useComboboxContext(): ComboboxContextValue;
 
 interface ComboboxContentOptions {
     /**
@@ -404,6 +451,7 @@ type index_ComboboxTriggerMode = ComboboxTriggerMode;
 type index_ComboboxTriggerOptions = ComboboxTriggerOptions;
 type index_ComboboxTriggerProps<T extends ValidComponent | HTMLElement = HTMLElement> = ComboboxTriggerProps<T>;
 type index_ComboboxTriggerRenderProps = ComboboxTriggerRenderProps;
+declare const index_useComboboxContext: typeof useComboboxContext;
 declare namespace index {
   export {
     PopperArrow as Arrow,
@@ -491,7 +539,8 @@ declare namespace index {
     ComboboxRoot as Root,
     ListboxSection as Section,
     ComboboxTrigger as Trigger,
+    index_useComboboxContext as useComboboxContext,
   };
 }
 
-export { ComboboxSingleSelectionOptions as A, ComboboxTriggerMode as B, ComboboxContentOptions as C, ComboboxTriggerOptions as D, ComboboxTriggerCommonProps as E, ComboboxTriggerRenderProps as F, ComboboxTriggerProps as G, ComboboxContent as H, ComboboxControl as I, ComboboxHiddenSelect as J, ComboboxIcon as K, ComboboxInput as L, ComboboxListbox as M, ComboboxPortal as N, ComboboxRoot as O, ComboboxTrigger as P, Combobox as Q, ComboboxContentCommonProps as a, ComboboxContentRenderProps as b, ComboboxContentProps as c, ComboboxControlOptions as d, ComboboxControlCommonProps as e, ComboboxControlRenderProps as f, ComboboxControlProps as g, ComboboxHiddenSelectProps as h, index as i, ComboboxIconProps as j, ComboboxInputOptions as k, ComboboxInputCommonProps as l, ComboboxInputRenderProps as m, ComboboxInputProps as n, ComboboxListboxOptions as o, ComboboxListboxCommonProps as p, ComboboxListboxRenderProps as q, ComboboxListboxProps as r, ComboboxMultipleSelectionOptions as s, ComboboxPortalProps as t, ComboboxBaseItemComponentProps as u, ComboboxRootOptions as v, ComboboxRootCommonProps as w, ComboboxRootRenderProps as x, ComboboxRootProps as y, ComboboxBaseSectionComponentProps as z };
+export { ComboboxSingleSelectionOptions as A, ComboboxTriggerMode as B, ComboboxContentOptions as C, ComboboxTriggerOptions as D, ComboboxTriggerCommonProps as E, ComboboxTriggerRenderProps as F, ComboboxTriggerProps as G, ComboboxContent as H, ComboboxControl as I, ComboboxHiddenSelect as J, ComboboxIcon as K, ComboboxInput as L, ComboboxListbox as M, ComboboxPortal as N, ComboboxRoot as O, ComboboxTrigger as P, useComboboxContext as Q, Combobox as R, ComboboxContentCommonProps as a, ComboboxContentRenderProps as b, ComboboxContentProps as c, ComboboxControlOptions as d, ComboboxControlCommonProps as e, ComboboxControlRenderProps as f, ComboboxControlProps as g, ComboboxHiddenSelectProps as h, index as i, ComboboxIconProps as j, ComboboxInputOptions as k, ComboboxInputCommonProps as l, ComboboxInputRenderProps as m, ComboboxInputProps as n, ComboboxListboxOptions as o, ComboboxListboxCommonProps as p, ComboboxListboxRenderProps as q, ComboboxListboxProps as r, ComboboxMultipleSelectionOptions as s, ComboboxPortalProps as t, ComboboxBaseItemComponentProps as u, ComboboxRootOptions as v, ComboboxRootCommonProps as w, ComboboxRootRenderProps as x, ComboboxRootProps as y, ComboboxBaseSectionComponentProps as z };
