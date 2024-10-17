@@ -189,6 +189,9 @@ export interface ComboboxBaseOptions<Option, OptGroup = never>
 	/** Whether the combobox allows empty selection. */
 	disallowEmptySelection?: boolean;
 
+	/** Whether the combobox allows `ctrl + a` to replace the selection with the current filtered list. */
+	disallowSelectAll?: boolean;
+
 	/** Whether the combobox closes after selection. */
 	closeOnSelection?: boolean;
 
@@ -310,7 +313,7 @@ export function ComboboxBase<
 			"open",
 			"defaultOpen",
 			"onOpenChange",
-			'inputValue',
+			"inputValue",
 			"onInputChange",
 			"value",
 			"defaultValue",
@@ -326,6 +329,7 @@ export function ComboboxBase<
 			"keyboardDelegate",
 			"allowDuplicateSelectionEvents",
 			"disallowEmptySelection",
+			"disallowSelectAll",
 			"defaultFilter",
 			"shouldFocusWrap",
 			"allowsEmptyCollection",
@@ -686,6 +690,7 @@ export function ComboboxBase<
 			keyboardDelegate: delegate,
 			disallowTypeAhead: true,
 			disallowEmptySelection: true,
+			disallowSelectAll: () => local.disallowSelectAll,
 			shouldFocusWrap: () => local.shouldFocusWrap,
 			// Prevent item scroll behavior from being applied here, handled in the Listbox component.
 			isVirtualized: true,
