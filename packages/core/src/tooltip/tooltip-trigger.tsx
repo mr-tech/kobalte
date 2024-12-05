@@ -141,13 +141,17 @@ export function TooltipTrigger<T extends ValidComponent = "button">(
 		});
 	};
 
-	const onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (e) => {
+	const onClick: JSX.EventHandlerUnion<HTMLElement, PointerEvent | MouseEvent> = (e) => {
 		callHandler(e, local.onClick);
+
+		if (e.defaultPrevented || ('pointerType' in e && e.pointerType === "touch")) {
+			return;
+		}
 
 		// No matter how the trigger is left, we should close the tooltip.
 		isHovered = false;
-		isFocused = false;
-
+		isFocused = false;	
+	
 		handleHide(true);
 	};
 

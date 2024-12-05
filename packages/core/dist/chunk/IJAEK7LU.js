@@ -1,22 +1,14 @@
-import {
-  Popper,
-  PopperArrow
-} from "./KFH362HI.jsx";
-import {
-  DismissableLayer
-} from "./5OEKFZ5A.jsx";
-import {
-  createDisclosureState
-} from "./E53DB7BS.jsx";
-import {
-  createRegisterId
-} from "./JNCCF6MP.jsx";
-import {
-  Polymorphic
-} from "./FLVHQV4A.jsx";
-import {
-  __export
-} from "./5WXHJDCZ.jsx";
+import { PopperArrow, Popper } from './4X2EKUJ3.js';
+import { DismissableLayer } from './7KU4OSOB.js';
+import { createDisclosureState } from './7LCANGHD.js';
+import { createRegisterId } from './E4R2EMM4.js';
+import { Polymorphic } from './6Y7B2NEO.js';
+import { __export } from './5ZKAE4VZ.js';
+import { createComponent, mergeProps, Portal, isServer, memo } from 'solid-js/web';
+import { mergeDefaultProps, mergeRefs, getDocument, getWindow, createGenerateId, contains, isPointInPolygon, getEventPoint, callHandler } from '@kobalte/utils';
+import { createContext, splitProps, createEffect, onCleanup, Show, createUniqueId, createSignal, createMemo, useContext } from 'solid-js';
+import { combineStyle } from '@solid-primitives/props';
+import createPresence from 'solid-presence';
 
 // src/tooltip/index.tsx
 var tooltip_exports = {};
@@ -28,26 +20,11 @@ __export(tooltip_exports, {
   Tooltip: () => Tooltip,
   Trigger: () => TooltipTrigger
 });
-
-// src/tooltip/tooltip-content.tsx
-import { mergeDefaultProps, mergeRefs } from "@kobalte/utils";
-import {
-  Show,
-  createEffect,
-  onCleanup,
-  splitProps
-} from "solid-js";
-import { combineStyle } from "@solid-primitives/props";
-
-// src/tooltip/tooltip-context.tsx
-import { createContext, useContext } from "solid-js";
 var TooltipContext = createContext();
 function useTooltipContext() {
   const context = useContext(TooltipContext);
   if (context === void 0) {
-    throw new Error(
-      "[kobalte]: `useTooltipContext` must be used within a `Tooltip` component"
-    );
+    throw new Error("[kobalte]: `useTooltipContext` must be used within a `Tooltip` component");
   }
   return context;
 }
@@ -55,62 +32,52 @@ function useTooltipContext() {
 // src/tooltip/tooltip-content.tsx
 function TooltipContent(props) {
   const context = useTooltipContext();
-  const mergedProps = mergeDefaultProps(
-    {
-      id: context.generateId("content")
-    },
-    props
-  );
+  const mergedProps = mergeDefaultProps({
+    id: context.generateId("content")
+  }, props);
   const [local, others] = splitProps(mergedProps, ["ref", "style"]);
   createEffect(() => onCleanup(context.registerContentId(others.id)));
-  return <Show when={context.contentPresent()}><Popper.Positioner><DismissableLayer
-    ref={mergeRefs((el) => {
-      context.setContentRef(el);
-    }, local.ref)}
-    role="tooltip"
-    disableOutsidePointerEvents={false}
-    style={combineStyle(
-      {
-        "--kb-tooltip-content-transform-origin": "var(--kb-popper-content-transform-origin)",
-        position: "relative"
-      },
-      local.style
-    )}
-    onFocusOutside={(e) => e.preventDefault()}
-    onDismiss={() => context.hideTooltip(true)}
-    {...context.dataset()}
-    {...others}
-  /></Popper.Positioner></Show>;
+  return createComponent(Show, {
+    get when() {
+      return context.contentPresent();
+    },
+    get children() {
+      return createComponent(Popper.Positioner, {
+        get children() {
+          return createComponent(DismissableLayer, mergeProps({
+            ref(r$) {
+              const _ref$ = mergeRefs((el) => {
+                context.setContentRef(el);
+              }, local.ref);
+              typeof _ref$ === "function" && _ref$(r$);
+            },
+            role: "tooltip",
+            disableOutsidePointerEvents: false,
+            get style() {
+              return combineStyle({
+                "--kb-tooltip-content-transform-origin": "var(--kb-popper-content-transform-origin)",
+                position: "relative"
+              }, local.style);
+            },
+            onFocusOutside: (e) => e.preventDefault(),
+            onDismiss: () => context.hideTooltip(true)
+          }, () => context.dataset(), others));
+        }
+      });
+    }
+  });
 }
-
-// src/tooltip/tooltip-portal.tsx
-import { Show as Show2 } from "solid-js";
-import { Portal } from "solid-js/web";
 function TooltipPortal(props) {
   const context = useTooltipContext();
-  return <Show2 when={context.contentPresent()}><Portal {...props} /></Show2>;
+  return createComponent(Show, {
+    get when() {
+      return context.contentPresent();
+    },
+    get children() {
+      return createComponent(Portal, props);
+    }
+  });
 }
-
-// src/tooltip/tooltip-root.tsx
-import {
-  contains,
-  createGenerateId,
-  getDocument,
-  getEventPoint,
-  getWindow,
-  isPointInPolygon,
-  mergeDefaultProps as mergeDefaultProps2
-} from "@kobalte/utils";
-import {
-  createEffect as createEffect2,
-  createMemo,
-  createSignal,
-  createUniqueId,
-  onCleanup as onCleanup2,
-  splitProps as splitProps2
-} from "solid-js";
-import { isServer } from "solid-js/web";
-import createPresence from "solid-presence";
 
 // src/tooltip/utils.ts
 function getTooltipSafeArea(placement, anchorEl, floatingEl) {
@@ -167,41 +134,26 @@ var globalSkipDelayTimeout;
 function TooltipRoot(props) {
   const defaultId = `tooltip-${createUniqueId()}`;
   const tooltipId = `${++tooltipsCounter}`;
-  const mergedProps = mergeDefaultProps2(
-    {
-      id: defaultId,
-      openDelay: 700,
-      closeDelay: 300,
-      skipDelayDuration: 300
-    },
-    props
-  );
-  const [local, others] = splitProps2(mergedProps, [
-    "id",
-    "open",
-    "defaultOpen",
-    "onOpenChange",
-    "disabled",
-    "triggerOnFocusOnly",
-    "openDelay",
-    "closeDelay",
-    "skipDelayDuration",
-    "ignoreSafeArea",
-    "forceMount"
-  ]);
+  const mergedProps = mergeDefaultProps({
+    id: defaultId,
+    openDelay: 700,
+    closeDelay: 300,
+    skipDelayDuration: 300
+  }, props);
+  const [local, others] = splitProps(mergedProps, ["id", "open", "defaultOpen", "onOpenChange", "disabled", "triggerOnFocusOnly", "openDelay", "closeDelay", "skipDelayDuration", "ignoreSafeArea", "forceMount"]);
   let closeTimeoutId;
   const [contentId, setContentId] = createSignal();
   const [triggerRef, setTriggerRef] = createSignal();
   const [contentRef, setContentRef] = createSignal();
-  const [currentPlacement, setCurrentPlacement] = createSignal(
-    others.placement
-  );
+  const [currentPlacement, setCurrentPlacement] = createSignal(others.placement);
   const disclosureState = createDisclosureState({
     open: () => local.open,
     defaultOpen: () => local.defaultOpen,
     onOpenChange: (isOpen) => local.onOpenChange?.(isOpen)
   });
-  const { present: contentPresent } = createPresence({
+  const {
+    present: contentPresent
+  } = createPresence({
     show: () => local.forceMount || disclosureState.isOpen(),
     element: () => contentRef() ?? null
   });
@@ -334,7 +286,7 @@ function TooltipRoot(props) {
     }
     hideTooltip();
   };
-  createEffect2(() => {
+  createEffect(() => {
     if (isServer) {
       return;
     }
@@ -343,11 +295,11 @@ function TooltipRoot(props) {
     }
     const doc = getDocument();
     doc.addEventListener("pointermove", onHoverOutside, true);
-    onCleanup2(() => {
+    onCleanup(() => {
       doc.removeEventListener("pointermove", onHoverOutside, true);
     });
   });
-  createEffect2(() => {
+  createEffect(() => {
     const trigger = triggerRef();
     if (!trigger || !disclosureState.isOpen()) {
       return;
@@ -359,12 +311,16 @@ function TooltipRoot(props) {
       }
     };
     const win = getWindow();
-    win.addEventListener("scroll", handleScroll, { capture: true });
-    onCleanup2(() => {
-      win.removeEventListener("scroll", handleScroll, { capture: true });
+    win.addEventListener("scroll", handleScroll, {
+      capture: true
+    });
+    onCleanup(() => {
+      win.removeEventListener("scroll", handleScroll, {
+        capture: true
+      });
     });
   });
-  onCleanup2(() => {
+  onCleanup(() => {
     clearTimeout(closeTimeoutId);
     const tooltip = tooltips[tooltipId];
     if (tooltip) {
@@ -391,30 +347,21 @@ function TooltipRoot(props) {
     setTriggerRef,
     setContentRef
   };
-  return <TooltipContext.Provider value={context}><Popper
-    anchorRef={triggerRef}
-    contentRef={contentRef}
-    onCurrentPlacementChange={setCurrentPlacement}
-    {...others}
-  /></TooltipContext.Provider>;
+  return createComponent(TooltipContext.Provider, {
+    value: context,
+    get children() {
+      return createComponent(Popper, mergeProps({
+        anchorRef: triggerRef,
+        contentRef,
+        onCurrentPlacementChange: setCurrentPlacement
+      }, others));
+    }
+  });
 }
-
-// src/tooltip/tooltip-trigger.tsx
-import { callHandler, getDocument as getDocument2, mergeRefs as mergeRefs2 } from "@kobalte/utils";
-import { onCleanup as onCleanup3, splitProps as splitProps3 } from "solid-js";
-import { isServer as isServer2 } from "solid-js/web";
 function TooltipTrigger(props) {
   let ref;
   const context = useTooltipContext();
-  const [local, others] = splitProps3(props, [
-    "ref",
-    "onPointerEnter",
-    "onPointerLeave",
-    "onPointerDown",
-    "onClick",
-    "onFocus",
-    "onBlur"
-  ]);
+  const [local, others] = splitProps(props, ["ref", "onPointerEnter", "onPointerLeave", "onPointerDown", "onClick", "onFocus", "onBlur"]);
   let isPointerDown = false;
   let isHovered = false;
   let isFocused = false;
@@ -455,12 +402,15 @@ function TooltipTrigger(props) {
   const onPointerDown = (e) => {
     callHandler(e, local.onPointerDown);
     isPointerDown = true;
-    getDocument2(ref).addEventListener("pointerup", handlePointerUp, {
+    getDocument(ref).addEventListener("pointerup", handlePointerUp, {
       once: true
     });
   };
   const onClick = (e) => {
     callHandler(e, local.onClick);
+    if (e.defaultPrevented || "pointerType" in e && e.pointerType === "touch") {
+      return;
+    }
     isHovered = false;
     isFocused = false;
     handleHide(true);
@@ -483,28 +433,31 @@ function TooltipTrigger(props) {
     isFocused = false;
     handleHide(true);
   };
-  onCleanup3(() => {
-    if (isServer2) {
+  onCleanup(() => {
+    if (isServer) {
       return;
     }
-    getDocument2(ref).removeEventListener("pointerup", handlePointerUp);
+    getDocument(ref).removeEventListener("pointerup", handlePointerUp);
   });
-  return <Polymorphic
-    as="button"
-    ref={mergeRefs2((el) => {
-      context.setTriggerRef(el);
-      ref = el;
-    }, local.ref)}
-    aria-describedby={context.isOpen() ? context.contentId() : void 0}
-    onPointerEnter={onPointerEnter}
-    onPointerLeave={onPointerLeave}
-    onPointerDown={onPointerDown}
-    onClick={onClick}
-    onFocus={onFocus}
-    onBlur={onBlur}
-    {...context.dataset()}
-    {...others}
-  />;
+  return createComponent(Polymorphic, mergeProps({
+    as: "button",
+    ref(r$) {
+      const _ref$ = mergeRefs((el) => {
+        context.setTriggerRef(el);
+        ref = el;
+      }, local.ref);
+      typeof _ref$ === "function" && _ref$(r$);
+    },
+    get ["aria-describedby"]() {
+      return memo(() => !!context.isOpen())() ? context.contentId() : void 0;
+    },
+    onPointerEnter,
+    onPointerLeave,
+    onPointerDown,
+    onClick,
+    onFocus,
+    onBlur
+  }, () => context.dataset(), others));
 }
 
 // src/tooltip/index.tsx
@@ -515,11 +468,4 @@ var Tooltip = Object.assign(TooltipRoot, {
   Trigger: TooltipTrigger
 });
 
-export {
-  TooltipContent,
-  TooltipPortal,
-  TooltipRoot,
-  TooltipTrigger,
-  Tooltip,
-  tooltip_exports
-};
+export { Tooltip, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger, tooltip_exports };

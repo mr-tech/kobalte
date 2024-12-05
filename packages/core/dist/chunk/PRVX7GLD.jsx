@@ -14,7 +14,7 @@ import {
   CollapsibleRoot,
   CollapsibleTrigger,
   useCollapsibleContext
-} from "./XZ3MOT5A.jsx";
+} from "./V46W2NYV.jsx";
 import {
   createRegisterId
 } from "./JNCCF6MP.jsx";

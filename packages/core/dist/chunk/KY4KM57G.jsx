@@ -7,7 +7,7 @@ import {
   DialogRoot,
   DialogTitle,
   DialogTrigger
-} from "./3HJ5K5AL.jsx";
+} from "./GX6VI64X.jsx";
 import {
   __export
 } from "./5WXHJDCZ.jsx";
